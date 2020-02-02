@@ -1,0 +1,2 @@
+# conways_life_of_game_rust
+RustでLifegameを作ってみた。
