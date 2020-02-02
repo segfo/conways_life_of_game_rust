@@ -19,11 +19,11 @@ struct Cell{
     // 周辺の生存マスのカウント
     around_survivers_count:u8,
     // 周りのセル
-    around_cells:Vec<ReferencableCell>,
+    around_cells:Vec<ReferencedCell>,
     // 自身のセル位置,あると便利。無くてもいいけどとりあえず。
     pt:Point
 }
-type ReferencableCell=Rc<RefCell<Cell>>;
+type ReferencedCell=Rc<RefCell<Cell>>;
 
 impl Cell{
     fn new(pt:Point)->Self{
@@ -68,7 +68,7 @@ impl Cell{
 // ボードを表現する実装
 #[derive(Debug)]
 struct Board{
-    inner:Vec<ReferencableCell>,
+    inner:Vec<ReferencedCell>,
     width:usize,
     height:usize,
 }
