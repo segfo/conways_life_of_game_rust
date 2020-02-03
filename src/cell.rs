@@ -38,6 +38,7 @@ impl Clone for Cell{
     fn clone(&self)->Cell{
         let mut cell = Cell::new(self.pt.clone());
         cell.survive = self.survive;
+        cell.around_survivers_count = self.around_survivers_count;
         cell
     }
 }
@@ -121,6 +122,7 @@ impl Cell{
             self.around_cells.push(cell)
         }
     }
+    #[allow(dead_code)]
     pub fn get_aroundcell_refcnts(&self)->usize{
         self.around_cells.len()
     }

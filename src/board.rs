@@ -110,15 +110,17 @@ impl Board{
         // 0 < y < height-1
         // の範囲でのみアクセスできる（この範囲外はセルの参照を持たないため、Out boundになる。）
         // 詳細は初期化ルーチン(Board::newのロジックを参考にすること)
+        let clone_board = self.clone();
         for y in 1..self.height-1{
             for x in 1..self.width-1{
-                // 3 == 生存
+                // 変更対象のボード
                 let mut o = self.inner[x+y*self.width].borrow_mut();
-                // 3個ちょうどなら誕生となる。
-                match o.get_around_survivers_count(){
+                // 状態を参照するためのボード
+                let clone = clone_board.inner[x+y*self.width].borrow_mut();
+                match clone.get_around_survivers_count(){
                     4..=8|0..=1=>{o.kill();}, // 過密/過疎により死亡する。
                     3=>{
-                        o.born();
+                        o.born(); //o.born();
                     },
                     2=>{},  // 生存する
                     _=>{panic!("「周辺マスの個数」が0-8の範囲を超えています。");}
@@ -137,6 +139,7 @@ impl Board{
             println!();
         }
     }
+    #[allow(dead_code)]
     pub fn show_refcnt_board(&mut self){
         // 
         println!("--------RefCnt(around_survivers_count)--------");
